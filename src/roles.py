@@ -16,6 +16,12 @@ async def create_role(server: discord.Guild, data: dict):
         try: color = discord.Color.from_str(hex_code)
         except: pass
 
+    perms_data = data.get("permissions", {})
+    permissions = discord.Permissions()
+    for perm_name, value in perms_data.items():
+        if hasattr(permissions, perm_name):
+            setattr(permissions, perm_name, value)
+
     hoist = data.get("hoist", False)
     mentionable = data.get("mentionable", False)
 
@@ -25,5 +31,6 @@ async def create_role(server: discord.Guild, data: dict):
             name=name,
             color=color,
             hoist=hoist,
-            mentionable=mentionable
+            mentionable=mentionable,
+            permissions=permissions
         )
