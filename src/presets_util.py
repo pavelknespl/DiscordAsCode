@@ -30,4 +30,5 @@ async def apply_preset(server: discord.Guild, preset_name: str, clear_all: bool 
         for ch_data in cat_data.get('channels', []):
             name = ch_data.get('name')
             ch_type = ch_data.get('type', 'text')
-            await channels.create_channel(server, category, name, ch_type)
+            perms = ch_data.get('permissions', {})
+            await channels.create_channel(server, category, name, ch_type, perms)
